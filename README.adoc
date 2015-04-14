@@ -1,0 +1,40 @@
+= Intro to Spark Workshop.  Apache Spark + Hadoop UG Apr 20 2015
+Kon Soulianidis <kon@outrospective.org>
+
+## About
+This project uses the http://gradle.org[Gradle] build tool.  You don't need to know Gradle or the
+Groovy language in order to use Spark, however Gradle does allow for expressive declarative builds
+that allow us to orchestrate what you need in order to get Spark up and running on your local
+machine, in addition to being a useful tool for compiling, testing and deploying your Spark apps.
+
+We've prepared this build file so that you can get to the Spark webpages, and supporting IDEs
+quickly and that you can start the command line REPL in order for the workshop.
+
+The intent here is that Gradle will download the required parts for you.  It is platform agnostic
+meaning the same build file __should__ work on Mac, Linux & even Windows.
+
+## IDEs
+Both IDEs this workshop recommends are free
+ - _IntelliJ Community Edition_ allows for basic Java editing.  If you haven't used a Java IDE before
+its recommended you try this.
+ - _Eclipse_ a long standing IDE. Those used to Eclipse can stay using it for their Spark endevours.
+
+## Requirements
+You need to install
+http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html[Java 8] for
+your platform.
+
+Spark has a dependency on Scala, however the Gradle Build File will pull this down for you.
+
+You'll also need a Java IDE with some Scala plugins.  There are Gradle tasks to open up the download
+pages in your browser for both IntelliJ and Eclipse.
+
+## Get Started
+Install Java 8 from the link in the previous section.
+
+At a command prompt type:
+`./gradlew tasks`
+
+This will download Gradle 2.3 if you don't already have it and show you a list of tasks you'll find
+useful for this workshop.
+
