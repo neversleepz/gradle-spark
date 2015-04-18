@@ -1,0 +1,15 @@
+/**
+ * This file has all the gradle download build files
+ */
+
+def eclipseURLs = [
+        OS_X : "http://scalaeclipse....tgz",
+        WINDOWS: "..."
+]
+
+def intelliJURLs = [:]
+
+task printURLs << {
+    println "Eclipse $eclipseURLs"
+    println "IDEA $intelliJURLs"
+}

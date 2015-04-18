@@ -6,6 +6,8 @@ apply plugin: 'scala'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 
+apply from: 'gradle/tools.gradle'
+
 sourceCompatibility = 1.8
 version = '1.0'
 description = "Apache Spark + Hadoop meetup group. Intro workshop Apr 20"
