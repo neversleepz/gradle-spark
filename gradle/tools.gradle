@@ -19,11 +19,19 @@ task downloadNedsSpark(type: Download) {
 
 
 def eclipseURLs = [
-        OS_X : "http://scalaeclipse....tgz",
-        WINDOWS: "..."
+	MacOSXCocoa64bit : "http://downloads.typesafe.com/scalaide-pack/4.0.0.vfinal-luna-211-20150305/scala-SDK-4.0.0-vfinal-2.11-macosx.cocoa.x86_64.zip",
+	MacOSXCocoa32bit : "http://downloads.typesafe.com/scalaide-pack/4.0.0.vfinal-luna-211-20150305/scala-SDK-4.0.0-vfinal-2.11-macosx.cocoa.x86.zip",
+        Windows64bit : "http://downloads.typesafe.com/scalaide-pack/4.0.0.vfinal-luna-211-20150305/scala-SDK-4.0.0-vfinal-2.11-win32.win32.x86_64.zip",
+	Windows32bit : "http://downloads.typesafe.com/scalaide-pack/4.0.0.vfinal-luna-211-20150305/scala-SDK-4.0.0-vfinal-2.11-win32.win32.x86.zip",
+	LinuxGTK64bit : "http://downloads.typesafe.com/scalaide-pack/4.0.0.vfinal-luna-211-20150305/scala-SDK-4.0.0-vfinal-2.11-linux.gtk.x86_64.tar.gz",
+	LinuxGTK32bit : "http://downloads.typesafe.com/scalaide-pack/4.0.0.vfinal-luna-211-20150305/scala-SDK-4.0.0-vfinal-2.11-linux.gtk.x86.tar.gz"
 ]
 
-def intelliJURLs = [:]
+def intelliJURLs = [
+	Windows32bit : "http://download.jetbrains.com/idea/ideaIC-14.1.1.exe",
+	MacOSXCocoa32bit : "http://download.jetbrains.com/idea/ideaIC-14.1.1.dmg",
+	LinuxGTK32bit : "http://download.jetbrains.com/idea/ideaIC-14.1.1.tar.gz"
+]
 
 task printURLs << {
     println "Eclipse $eclipseURLs"
