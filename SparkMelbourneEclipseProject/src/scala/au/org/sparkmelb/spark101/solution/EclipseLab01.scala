@@ -12,10 +12,10 @@ object EclipseLab01 {
 
   def main(args: Array[String]) {
 
-    // Set Configuration
+    // Setup Spark Configuration
     val sparkConf = new SparkConf().setAppName("EclipseLab01").setMaster("local[1]")
   
-    // Get Context
+    // Define Spark Context
     val sparkContext = new SparkContext( sparkConf )
     
     // Setup SQL Context to get Dataframe

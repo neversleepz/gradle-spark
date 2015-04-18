@@ -12,9 +12,9 @@ object EclipseLab01 {
 
   def main(args: Array[String]) {
 
-    // Set Configuration
+    // Setup Spark Configuration
   
-    // Get Context
+    // Define Spark Context
     
     // Setup SQL Context to get Dataframe
   
