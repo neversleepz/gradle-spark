@@ -2,6 +2,14 @@
  * This file has all the gradle download build files
  */
 
+import static org.gradle.api.tasks.wrapper.Wrapper.PathBase.*
+wrapper {
+    gradleVersion = 2.3
+    archiveBase = PROJECT
+    archivePath = 'tools/gradle'
+    distributionUrl = distributionUrl.replace('-bin.zip','-all.zip')
+}
+
 def eclipseURLs = [
         OS_X : "http://scalaeclipse....tgz",
         WINDOWS: "..."
