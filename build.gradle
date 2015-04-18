@@ -46,13 +46,13 @@ task quickStartGuide(type: OpenPage) {
 task sparkDownloadPage(type: OpenPage) {
     group "Tools Download"
     description "Open the Spark Downloads page to get the version you need"
-    uri = "http://spark.apache.org/downloads.html"
+    uri "http://spark.apache.org/downloads.html"
 }
 
 task eclipseDownload(type: OpenPage) {
     group "Tools Download"
     description "Opens the Scala Eclipse IDE download page"
-    uri = "http://scala-ide.org/download/sdk.html"
+    uri "http://scala-ide.org/download/sdk.html"
 }
 
 task ideaCEDownload(type: OpenPage) {
@@ -106,6 +106,6 @@ class OpenPage extends DefaultTask {
 
     @TaskAction
     def open() {
-        desktop.browse("https://www.jetbrains.com/idea/download/".toURI())
+        desktop.browse(uri.toURI())
     }
 }
