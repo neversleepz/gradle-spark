@@ -14,17 +14,18 @@ repositories {
     jcenter()
 }
 
-def scalaVersion = '2.10'
-def sparkVersion = '1.3.0'
-def hadoopVersion = '2.4'
+def scalaVersion = '2.10.4'
+def scalaMajorVersion = '2.10'
+def sparkVersion = '1.3.1'
+def hadoopVersion = '2.6'
 def sparkDistroPath = Paths.get(project.buildDir.absolutePath, 'spark-distro')
 
 dependencies {
     // this will download scala for you
     compile "org.scala-lang:scala-library:$scalaVersion"
-
+    compile "org.scala-lang:jline:$scalaVersion"
     // this is spark core
-    compile "org.apache.spark:spark-core_$scalaVersion:$sparkVersion"
+    compile "org.apache.spark:spark-core_$scalaMajorVersion:$sparkVersion"
 
     // optional: hadoop cluster
     compile "org.apache.hadoop:hadoop-client:2.6.0"
@@ -52,7 +53,6 @@ task eclipseDownload(type: OpenPage) {
     group "Tools Download"
     description "Opens the Scala Eclipse IDE download page"
     uri = "http://scala-ide.org/download/sdk.html"
-
 }
 
 task ideaCEDownload(type: OpenPage) {
@@ -68,7 +68,7 @@ task ideaCEDownload(type: OpenPage) {
 import de.undercouch.gradle.tasks.download.Download
 task downloadSparkHadoopDistro(type: Download) {
     group "Tools Download"
-    description "Downloads the Spark $scalaVersion & Hadoop $hadoopVersion package from the spark webpage"
+    description "Downloads the Spark $sparkVersion & Hadoop $hadoopVersion package from the spark webpage"
     src "https://mirror.aarnet.edu.au/pub/apache/spark/"+
             "spark-$sparkVersion/" + sparkDistroFileName(sparkVersion, hadoopVersion)
     dest sparkDistroPath.toString()
