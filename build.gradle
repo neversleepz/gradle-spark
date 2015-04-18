@@ -22,6 +22,12 @@ def sparkVersion = '1.3.1'
 def hadoopVersion = '2.6'
 def sparkDistroPath = Paths.get(project.buildDir.absolutePath, 'spark-distro')
 
+repositories {
+    flatDir {
+        dirs "$projectDir/build/spark-$sparkVersion-bin-hadoop$hadoopVersion/lib"
+    }
+}
+
 dependencies {
     // this will download scala for you
     compile "org.scala-lang:scala-library:$scalaVersion"
@@ -29,6 +35,8 @@ dependencies {
     // this is spark core
     compile "org.apache.spark:spark-core_$scalaMajorVersion:$sparkVersion"
 
+    // this is the big hunking one
+    compile ":lib:spark-assembly-$sparkVersion-hadoop$hadoopVersion.0@jar"
     // optional: hadoop cluster
     compile "org.apache.hadoop:hadoop-client:2.6.0"
 
