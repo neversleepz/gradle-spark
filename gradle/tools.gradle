@@ -2,6 +2,14 @@
  * This file has all the gradle download build files
  */
 
+import static org.gradle.api.tasks.wrapper.Wrapper.PathBase.*
+wrapper {
+    gradleVersion = 2.3
+    archiveBase = PROJECT
+    archivePath = 'tools/gradle'
+    distributionUrl = distributionUrl.replace('-bin.zip','-all.zip')
+}
+
 def eclipseURLs = [
 	MacOSXCocoa64bit : "http://downloads.typesafe.com/scalaide-pack/4.0.0.vfinal-luna-211-20150305/scala-SDK-4.0.0-vfinal-2.11-macosx.cocoa.x86_64.zip",
 	MacOSXCocoa32bit : "http://downloads.typesafe.com/scalaide-pack/4.0.0.vfinal-luna-211-20150305/scala-SDK-4.0.0-vfinal-2.11-macosx.cocoa.x86.zip",

@@ -35,12 +35,6 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
 }
 
-wrapper {
-    gradleVersion = 2.3
-    archiveBase = PROJECT
-    archivePath = 'tools/gradle'
-    distributionUrl = distributionUrl.replace('-bin.zip','-all.zip')
-}
 
 task openPageForNedsSpark(type: OpenPage) {
     group "Download"
@@ -125,7 +119,6 @@ task sparkShell {
 import java.nio.file.Paths
 
 import static java.awt.Desktop.desktop
-import static org.gradle.api.tasks.wrapper.Wrapper.PathBase.*
 
 class OpenPage extends DefaultTask {
     @Input
