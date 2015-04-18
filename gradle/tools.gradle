@@ -66,7 +66,7 @@ task downloadAllIDEs() << {
 
 private def urlPathMap(LinkedHashMap<String, String> ideMap, ideName) {
     def entries = ideMap.collectEntries { String platform, String url ->
-        [url, "$buildDir/ide/$ideName/$platform"]
+        [url, "$projectDir/tools/ide/$ideName/$platform"]
     }
     entries as Map<String, String>
 }
