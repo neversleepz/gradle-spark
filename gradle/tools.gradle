@@ -10,6 +10,7 @@ buildscript {
     }
 }
 
+/* Place the wrapper zips in the tools folder for inclusion in USB */
 import static org.gradle.api.tasks.wrapper.Wrapper.PathBase.*
 wrapper {
     gradleVersion = 2.3
@@ -24,6 +25,39 @@ task downloadNedsSpark(type: Download) {
     description "Download the special spark distro for the night"
     src "https://doc-0c-1s-docs.googleusercontent.com/docs/securesc/i79mpt1cnmodd490teh8lqjvsrv49t29/o8e08m40tbrr9hoi7ir2m50pvgtu282t/1429250400000/08545749745465124544/12916015598608622046/0B0ZE5JyeFFI0VDJoc2xyU1l6WGM?e=download&nonce=asjt36o9sspm0&user=12916015598608622046&hash=a0294fpd1vs01ncfvq9sf9knl7ihj0ih"
     dest "$projectDir/data/spark.tar.gz"
+}
+
+import java.nio.file.Paths
+def sparkDistroPath = Paths.get(projectDir.absolutePath, 'tools','spark')
+
+task downloadSparkHadoopDistro(type: Download) {
+    group "Tools Download"
+    description "Downloads the Spark $sparkVersion & Hadoop $hadoopVersion package from the spark webpage"
+
+    def fileName = sparkDistroFileName(sparkVersion, hadoopVersion)
+    src "https://mirror.aarnet.edu.au/pub/apache/spark/"+
+            "spark-$sparkVersion/" + fileName
+    dest "${sparkDistroPath.toString()}/$fileName"
+
+    overwrite false
+    onlyIfNewer true
+    doFirst {
+        project.mkdir(sparkDistroPath.toFile())
+    }
+    doLast {
+        logger.info("Downloaded Spark and Hadoop from $src to $project.buildDir")
+    }
+}
+
+def GString sparkDistroFileName(sparkVersion, hadoopVersion) {
+    "spark-$sparkVersion-bin-hadoop${hadoopVersion}.tgz"
+}
+
+task extractSparkDistro(type: Copy, dependsOn: downloadSparkHadoopDistro) {
+    group "Tools download"
+    description "Extract downloaded distribution to build directory"
+    from tarTree(resources.gzip(downloadSparkHadoopDistro.dest))
+    into "tools"
 }
 
 def eclipseURLs = [
@@ -42,19 +76,14 @@ def intelliJURLs = [
     scalaPlugin : "https://plugins.jetbrains.com/files/1347/19130/scala-intellij-bin-1.4.15.zip"
 ]
 
-task printURLs << {
-    println "Eclipse $eclipseURLs"
-    println "IDEA $intelliJURLs"
-}
-
-task downloadAllIDEs() << {
+task downloadAllIDEs << {
     def scalaLinks = urlPathMap(eclipseURLs, "scalaIDE")
     def ideaLinks = urlPathMap(intelliJURLs, "ideaCE")
     def allLinks = scalaLinks + ideaLinks
-
+    logger.info("About to download the following links")
     allLinks.each { url, destination ->
         def destPath = "${destination}/${URI.create(url).toURL().getPath().tokenize('/')[-1]}"
-        println destPath
+        logger.debug "Download $url to $destPath"
         download {
             src url
             dest destPath

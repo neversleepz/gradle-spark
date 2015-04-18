@@ -1,3 +1,5 @@
+import de.undercouch.gradle.tasks.download.Download
+
 plugins {
     id "de.undercouch.download" version "1.2"
 }
@@ -17,10 +19,8 @@ repositories {
 }
 
 def scalaVersion = '2.10.4'
-def scalaMajorVersion = '2.10'
 def sparkVersion = '1.3.1'
 def hadoopVersion = '2.6'
-def sparkDistroPath = Paths.get(project.buildDir.absolutePath, 'spark-distro')
 
 repositories {
     flatDir {
@@ -46,90 +46,25 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
 }
 
+import de.undercouch.gradle.tasks.download.Download
 
-task openPageForNedsSpark(type: OpenPage) {
-    group "Lab"
-    description "Visit Neds Project on Google Drive"
-    uri "https://drive.google.com/file/d/0B0ZE5JyeFFI0VDJoc2xyU1l6WGM/view?usp=sharing"
-}
-
-task downloadTheData(type: Download) {
+task downloadExampleData(type: Download) {
     group "Lab"
     description "Download the data examples"
-    src "http://doc-0c-1s-docs.googleusercontent.com/docs/TODO DODODOO"
-    dest "data.tar.gz"
-}
-
-task quickStartGuide(type: OpenPage) {
-    group "Documentation"
-    description "Open the Spark quick start guide"
-    uri "https://spark.apache.org/docs/latest/quick-start.html"
-}
-
-task sparkDownloadPage(type: OpenPage) {
-    group "Tools Download"
-    description "Open the Spark Downloads page to get the version you need"
-    uri "http://spark.apache.org/downloads.html"
-}
-
-task eclipseDownload(type: OpenPage) {
-    group "Tools Download"
-    description "Opens the Scala Eclipse IDE download page"
-    uri "http://scala-ide.org/download/sdk.html"
-}
-
-task ideaCEDownload(type: OpenPage) {
-    group "Tools Download"
-    description "Opens IDEAs download page"
-    uri "https://www.jetbrains.com/idea/download/"
-    doFirst {
-        logger.quiet("Opening IDEA download page.  You can use the free Community Edition " +
-            "with the scala plugin")
-    }
-}
-
-import de.undercouch.gradle.tasks.download.Download
-task downloadSparkHadoopDistro(type: Download) {
-    group "Tools Download"
-    description "Downloads the Spark $sparkVersion & Hadoop $hadoopVersion package from the spark webpage"
-    src "https://mirror.aarnet.edu.au/pub/apache/spark/"+
-            "spark-$sparkVersion/" + sparkDistroFileName(sparkVersion, hadoopVersion)
-    dest sparkDistroPath.toString()
+    src "https://copy.com/0JLiJiXzNZOa1TvL/Spark/data.tar.gz?download=1"
+    dest dataDestDir
     overwrite false
-    onlyIfNewer true
-    doLast {
-        logger.info("Downloaded Spark and Hadoop from $src to $project.buildDir")
-    }
 }
 
-public GString sparkDistroFileName(sparkVersion, hadoopVersion) {
-    "spark-$sparkVersion-bin-hadoop${hadoopVersion}.tgz"
+task extractExampleData(type: Copy, dependsOn: downloadExampleData) {
+    group "Lab"
+    description "ExtractExampleData"
+    from tarTree(dataDestDir)
+    into file(dataDestDir).parentFile
 }
 
-task extractSparkDistro(type: Copy, dependsOn: downloadSparkHadoopDistro) {
-    group "Tools download"
-    description "Extract downloaded distribution to build directory"
-    from tarTree(resources.gzip(downloadSparkHadoopDistro.dest))
-    into buildDir
-}
-
-
-task sparkShell {
-    group "Use Spark"
+task sparkTestShell {
+    group "TODO: Use Spark"
     description "Open the Scala Console with the test classpath"
     dependsOn scalaTestConsole
-}
-
-import java.nio.file.Paths
-
-import static java.awt.Desktop.desktop
-
-class OpenPage extends DefaultTask {
-    @Input
-    String uri
-
-    @TaskAction
-    def open() {
-        desktop.browse(uri.toURI())
-    }
 }

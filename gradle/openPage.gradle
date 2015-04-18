@@ -1,0 +1,11 @@
+import static java.awt.Desktop.desktop
+
+class OpenPage extends DefaultTask {
+    @Input
+    String uri
+
+    @TaskAction
+    def open() {
+        desktop.browse(uri.toURI())
+    }
+}
