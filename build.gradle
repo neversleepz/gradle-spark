@@ -37,6 +37,26 @@ wrapper {
     gradleVersion = 2.3
 }
 
+task openPageForNedsSpark(type: OpenPage) {
+    group "Download"
+    description "If download Neds spark doesnt work"
+    uri "https://drive.google.com/file/d/0B0ZE5JyeFFI0VDJoc2xyU1l6WGM/view?usp=sharing"
+}
+
+task downloadNedsSpark(type: Download) {
+    group "Tools Download"
+    description "Download the special spark distro for the night"
+    src "https://doc-0c-1s-docs.googleusercontent.com/docs/securesc/i79mpt1cnmodd490teh8lqjvsrv49t29/o8e08m40tbrr9hoi7ir2m50pvgtu282t/1429250400000/08545749745465124544/12916015598608622046/0B0ZE5JyeFFI0VDJoc2xyU1l6WGM?e=download&nonce=asjt36o9sspm0&user=12916015598608622046&hash=a0294fpd1vs01ncfvq9sf9knl7ihj0ih"
+    dest "spark.tar.gz"
+}
+
+task downloadTheData(type: Download) {
+    group "Download"
+    description "TODO: Download just the data examples"
+    src ""
+    dest "data.tar.gz"
+}
+
 task quickStartGuide(type: OpenPage) {
     group "Documentation"
     description "Open the Spark quick start guide"
