@@ -31,28 +31,31 @@ repositories {
 dependencies {
     // this will download scala for you
     compile "org.scala-lang:scala-library:$scalaVersion"
-    compile "org.scala-lang:jline:$scalaVersion"
-    // this is spark core
-    compile "org.apache.spark:spark-core_$scalaMajorVersion:$sparkVersion"
+//    compile "org.scala-lang:jline:$scalaVersion"
 
-    // this is the big hunking one
-    compile ":lib:spark-assembly-$sparkVersion-hadoop$hadoopVersion.0@jar"
+    // this is the standalone jar for most spark projects
+    compile files("$projectDir/build/spark-$sparkVersion-bin-hadoop$hadoopVersion/lib/spark-assembly-$sparkVersion-hadoop$hadoopVersion.0.jar") {
+        builtBy 'extractSparkDistro'
+    }
+
+    // this is spark core - with all the transiative deps
+//    compile "org.apache.spark:spark-core_$scalaMajorVersion:$sparkVersion"
     // optional: hadoop cluster
-    compile "org.apache.hadoop:hadoop-client:2.6.0"
+//    compile "org.apache.hadoop:hadoop-client:$hadoopVersion.0"
 
     testCompile group: 'junit', name: 'junit', version: '4.11'
 }
 
 
 task openPageForNedsSpark(type: OpenPage) {
-    group "Download"
-    description "If download Neds spark doesnt work"
+    group "Lab"
+    description "Visit Neds Project on Google Drive"
     uri "https://drive.google.com/file/d/0B0ZE5JyeFFI0VDJoc2xyU1l6WGM/view?usp=sharing"
 }
 
 task downloadTheData(type: Download) {
-    group "Download"
-    description "TODO: Download just the data examples"
+    group "Lab"
+    description "Download the data examples"
     src "http://doc-0c-1s-docs.googleusercontent.com/docs/TODO DODODOO"
     dest "data.tar.gz"
 }
