@@ -14,16 +14,26 @@ def sparkVersion = '1.3.1'
 def hadoopVersion = '2.6'
 
 def sparkLibPath = "$projectDir/tools/spark-$sparkVersion-bin-hadoop$hadoopVersion/lib"
+def scalaLibPath = "$projectDir/tools/scala-jars"
 repositories {
     flatDir {
-        dirs sparkLibPath
+        dirs sparkLibPath, scalaLibPath
     }
     jcenter()
+}
+
+configurations {
+    idea {
+        transitive = true
+    }
 }
 
 dependencies {
     // this will download scala for you
     compile "org.scala-lang:scala-library:$scalaVersion"
+    idea "org.scala-lang:scala-library:$scalaVersion"
+    idea "org.scala-lang:scala-compiler:$scalaVersion"
+    idea "org.scala-lang:scala-reflect:$scalaVersion"
 
     // Add support for the unsupported scalaConsole gradle task
     // compile "org.scala-lang:jline:$scalaVersion"
@@ -42,16 +52,13 @@ dependencies {
     // testCompile group: 'junit', name: 'junit', version: '4.11'
 }
 
-eclipse {
-    files {
-        withProperty { properties ->
-             properties.put('scala.compiler.installation','2.10')
-        }
-    }
-}
-
 task prepareUsb {
     group 'preparation'
     description 'Download and Extract all the required tools and libraries for the USB stick'
     dependsOn(extractExampleData, extractSparkDistro, downloadAllIDEs)
+}
+
+task copyScalaJars(type: Copy) {
+    from configurations.compile.files + configurations.idea.files
+    into scalaLibPath
 }
