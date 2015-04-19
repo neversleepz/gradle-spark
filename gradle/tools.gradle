@@ -45,7 +45,7 @@ task extractExampleData(type: Copy, dependsOn: downloadExampleData) {
 import java.nio.file.Paths
 def sparkDistroPath = Paths.get(projectDir.absolutePath, 'tools','spark')
 
-task downloadSparkHadoopDistro(type: Download) {
+task downloadSparkDistro(type: Download) {
     group "Tools Download"
     description "Downloads the Spark $sparkVersion & Hadoop $hadoopVersion package from the spark webpage"
 
@@ -68,10 +68,10 @@ def GString sparkDistroFileName(sparkVersion, hadoopVersion) {
     "spark-$sparkVersion-bin-hadoop${hadoopVersion}.tgz"
 }
 
-task extractSparkDistro(type: Copy, dependsOn: downloadSparkHadoopDistro) {
+task extractSparkDistro(type: Copy, dependsOn: downloadSparkDistro) {
     group "Tools download"
     description "Extract downloaded distribution to build directory"
-    from tarTree(resources.gzip(downloadSparkHadoopDistro.dest))
+    from tarTree(resources.gzip(downloadSparkDistro.dest))
     into "tools"
 }
 

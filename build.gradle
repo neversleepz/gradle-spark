@@ -50,4 +50,8 @@ eclipse {
     }
 }
 
-tasks.prepareUsb.dependsOn(extractDownloadData, extractSparkHadoopDistro, downloadAllIDEs)
+task prepareUsb {
+    group 'preparation'
+    description 'Download and Extract all the required tools and libraries for the USB stick'
+    dependsOn(extractExampleData, extractSparkDistro, downloadAllIDEs)
+}
