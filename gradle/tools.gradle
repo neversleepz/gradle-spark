@@ -1,5 +1,5 @@
 /**
- * This file has all the gradle download build files
+ * This file has tasks to download all the Tools for the workshop
  */
 buildscript {
     repositories {
@@ -86,15 +86,15 @@ def eclipseURLs = [
 ]
 
 def intelliJURLs = [
-	Windows32bit : "http://download.jetbrains.com/idea/ideaIC-14.1.1.exe",
-	MacOSXCocoa32bit : "http://download.jetbrains.com/idea/ideaIC-14.1.1.dmg",
-	LinuxGTK32bit : "http://download.jetbrains.com/idea/ideaIC-14.1.1.tar.gz",
+	Windows : "http://download.jetbrains.com/idea/ideaIC-14.1.1.exe",
+	MacOSX : "http://download.jetbrains.com/idea/ideaIC-14.1.1.dmg",
+	Linux : "http://download.jetbrains.com/idea/ideaIC-14.1.1.tar.gz",
     scalaPlugin : "https://plugins.jetbrains.com/files/1347/19130/scala-intellij-bin-1.4.15.zip"
 ]
 
 task downloadAllIDEs << {
-    def scalaLinks = urlPathMap(eclipseURLs, "scalaIDE")
-    def ideaLinks = urlPathMap(intelliJURLs, "ideaCE")
+    def scalaLinks = urlPathMap(eclipseURLs, "Eclipse")
+    def ideaLinks = urlPathMap(intelliJURLs, "Idea")
     def allLinks = scalaLinks + ideaLinks
     logger.info("About to download the following links")
     allLinks.each { url, destination ->
@@ -109,9 +109,37 @@ task downloadAllIDEs << {
     }
 }
 
+tasks.downloadAllIDEs {
+    group "Lab"
+    description "Downloads all IDES for the lab for all platforms.  Good for instructors preparing a USB stick"
+}
+
 private def urlPathMap(LinkedHashMap<String, String> ideMap, ideName) {
     def entries = ideMap.collectEntries { String platform, String url ->
         [url, "$projectDir/tools/ide/$ideName/$platform"]
     }
     entries as Map<String, String>
+}
+
+[Idea:intelliJURLs, Eclipse:eclipseURLs].each { ide, platformList ->
+    platformList.each { String platform, String url ->
+        task "download${ide}For$platform"(type: Download) {
+            group "IDE Downloads"
+            description "Download $ide for $platform"
+
+            doFirst {
+                mkdir("$projectDir/tools/ide/$platform/")
+            }
+
+            src url
+            dest "$projectDir/tools/ide/$ide/$platform/"
+            overwrite false
+            onlyIfNewer true
+
+            // make sure the Idea downloaders also get the scala plugin
+            if (ide == "Idea" && platform != "scalaPlugin") {
+                dependsOn "downloadIdeaForScalaPlugin"
+            }
+        }
+    }
 }
