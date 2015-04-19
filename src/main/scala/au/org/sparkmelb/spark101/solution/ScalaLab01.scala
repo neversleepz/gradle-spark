@@ -1,4 +1,4 @@
-package scala.au.org.sparkmelb.spark101.solution
+package au.org.sparkmelb.spark101.solution
 
 // Import libraries
 import org.apache.spark.sql.SQLContext
@@ -8,7 +8,7 @@ import org.apache.spark.SparkContext
 /**
  * @author timothy.findlay
  */
-object EclipseLab01 {
+object ScalaLab01 {
 
   def main(args: Array[String]) {
 
@@ -22,7 +22,7 @@ object EclipseLab01 {
     val sqlContext = new SQLContext( sparkContext )  
   
     // Define Filename, store in a static variable fileName
-    val fileName="C:\\SparkMelbourne\\spark-1.3.1-bin-hadoop2.6\\data\\people.json"
+    val fileName="""C:\SparkMelbourne\spark-1.3.1-bin-hadoop2.6\data\people.json"""
 
     // Perform the read
     var newRows = sqlContext.jsonFile( fileName )

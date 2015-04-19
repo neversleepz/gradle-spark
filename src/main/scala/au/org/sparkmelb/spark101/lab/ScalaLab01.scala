@@ -1,4 +1,4 @@
-package scala.au.org.sparkmelb.spark101.lab
+package au.org.sparkmelb.spark101.lab
 
 // Import libraries
 import org.apache.spark.sql.SQLContext
@@ -8,7 +8,7 @@ import org.apache.spark.SparkContext
 /**
  * @author timothy.findlay
  */
-object EclipseLab01 {
+object ScalaLab01 {
 
   def main(args: Array[String]) {
 

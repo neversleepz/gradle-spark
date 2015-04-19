@@ -13,9 +13,9 @@ import java.util.Arrays;
  * - Use of FlatMap
  *
  */
-public class IntelliJLab01 {
+public class JavaLab01 {
 
-    public void main(String[] argsc) {
+    public static void main(String[] argsc) {
 
         // Setup Spark Configuration
 
