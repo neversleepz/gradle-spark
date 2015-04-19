@@ -52,13 +52,15 @@ dependencies {
     // testCompile group: 'junit', name: 'junit', version: '4.11'
 }
 
+task copyScalaJars(type: Copy) {
+    group 'preparation'
+    description 'Copy Scala Jars for IDEA support'
+    from configurations.compile.files + configurations.idea.files
+    into scalaLibPath
+}
+
 task prepareUsb {
     group 'preparation'
     description 'Download and Extract all the required tools and libraries for the USB stick'
-    dependsOn(extractExampleData, extractSparkDistro, downloadAllIDEs)
-}
-
-task copyScalaJars(type: Copy) {
-    from configurations.compile.files + configurations.idea.files
-    into scalaLibPath
+    dependsOn(copyScalaJars, extractExampleData, extractSparkDistro, downloadAllIDEs)
 }
