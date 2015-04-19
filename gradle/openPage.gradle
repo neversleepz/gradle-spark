@@ -1,6 +1,6 @@
 import static java.awt.Desktop.desktop
 
-class OpenPage extends DefaultTask {
+public class OpenPage extends DefaultTask {
     @Input
     String uri
 

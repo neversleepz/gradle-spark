@@ -1,4 +1,4 @@
-apply from: 'openPage.gradle'
+apply from: 'gradle/openPage.gradle'
 
 task openPageForNedsSpark(type: OpenPage) {
     group "Lab"
@@ -34,4 +34,14 @@ task ideaCEDownload(type: OpenPage) {
     }
 }
 
+import static java.awt.Desktop.desktop
 
+public class OpenPage extends DefaultTask {
+    @Input
+    String uri
+
+    @TaskAction
+    def open() {
+        desktop.browse(uri.toURI())
+    }
+}
