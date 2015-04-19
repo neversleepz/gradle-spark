@@ -75,5 +75,12 @@ task copyScalaJars(type: Copy) {
 task prepareUsb {
     group 'preparation'
     description 'Download and Extract all the required tools and libraries for the USB stick'
-    dependsOn(copyScalaJars, extractExampleData, extractSparkDistro, downloadAllIDEs)
+    dependsOn(copyScalaJars, extractExampleData, extractSparkDistro)
 }
+
+task prepareUsbWithIDEs {
+    group 'preparation'
+    description 'Download and Extract all the required tools and libraries for the USB stick'
+    dependsOn(prepareUsb, downloadAllIDEs)
+}
+
