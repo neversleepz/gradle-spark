@@ -1,5 +1,3 @@
-apply from: 'gradle/openPage.gradle'
-
 task openPageForNedsSpark(type: OpenPage) {
     group "Lab"
     description "Visit Neds Project on Google Drive"
