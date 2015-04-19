@@ -1,4 +1,4 @@
-package java.au.org.sparkmelb.spark101.solution;
+package au.org.sparkmelb.spark101.solution;
 
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaRDD;
