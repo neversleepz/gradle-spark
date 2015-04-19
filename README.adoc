@@ -1,7 +1,29 @@
-= Intro to Spark Workshop.  Apache Spark + Hadoop UG Apr 20 2015
-Kon Soulianidis <kon@outrospective.org>
+= Intro to Spark Workshop
+:icons: font
+:experimental:
+Kon Soulianidis, Timothy Findlay, Ned Shawa, Mark Moloney
 
-## About
+==  Melbourne Apache Spark + Hadoop Users Group - Apr 20 2015
+
+# About
+The Goal of this workshop is to provide attendees with an introduction to
+http://spark.apache.org[Apache Spark].
+
+We'll cover
+
+1. Intro to Spark
+2. Intro to the REPL and executing Spark commands
+3. Intro to writing Spark Applications in your IDE
+
+## About this project
+We've prepared this project as the goto point for all resources needed for the workshop.
+
+It is designed to run without an internet connection but we make no gurantees.
+
+You can either use this project, cloned from Github, and run a task to
+link:'Get what you need'[Get what you need] or you can grab a USB stick off one of the organisers
+to copy everything to your hard-drive.
+
 This project uses the http://gradle.org[Gradle] build tool.  You don't need to know Gradle or the
 Groovy language in order to use Spark, however Gradle does allow for expressive declarative builds
 that allow us to orchestrate what you need in order to get Spark up and running on your local
@@ -11,13 +33,7 @@ We've prepared this build file so that you can get to the Spark webpages, and su
 quickly and that you can start the command line REPL in order for the workshop.
 
 The intent here is that Gradle will download the required parts for you.  It is platform agnostic
-meaning the same build file __should__ work on Mac, Linux & even Windows.
-
-## IDEs
-Both IDEs this workshop recommends are free
- - _IntelliJ Community Edition_ allows for basic Java editing.  If you haven't used a Java IDE before
-its recommended you try this.
- - _Eclipse_ a long standing IDE. Those used to Eclipse can stay using it for their Spark endevours.
+meaning the same build file will work on Mac, Linux & even Windows.
 
 ## Requirements
 You need to install
@@ -29,12 +45,114 @@ Spark has a dependency on Scala, however the Gradle Build File will pull this do
 You'll also need a Java IDE with some Scala plugins.  There are Gradle tasks to open up the download
 pages in your browser for both IntelliJ and Eclipse.
 
-## Get Started
-Install Java 8 from the link in the previous section.
+### IDEs
+Both IDEs this workshop recommends are free:
 
+- _IntelliJ Community Edition_ is a free IDE for Java, Scala + a host of other languages.  If you
+ haven't used a Java IDE before its recommended you try this.
+- _ScalaIDE_ An Eclipse distribution with the Scala plugin already installed. Those used to Eclipse
+ can stay using it for their Spark endevours.
+
+If you already have Eclipse or IDEA installed, you just need to get the Scala plugin.  We've tested
+with the latest versions available.  If following on during the workshop it may be best to use one
+of the IDEs provided.
+
+## Get what you need
+### Java
+Install Java 8 from the link in the previous section.  *Note:* One of the organisers will have a USB
+ stick with versions of Java for all the relevant platforms.
+
+### Gradle
 At a command prompt type:
+
 `./gradlew tasks`
 
 This will download Gradle 2.3 if you don't already have it and show you a list of tasks you'll find
-useful for this workshop.
+useful for this workshop.  There is also some 'Documentation' tasks you with quick links to spark
+home page, scala IDEs, etc.
 
+### An IDE
+If you don't have an IDE installed, you can use Gradle to download one.  Look for *IDE Download Tasks*
+in the Gradle.  For example
+
+`./gradlew downloadEclipseForMacOSXCocoa64bit`
+
+If using IntelliJ dont forget to get the Scala Plugin using
+
+`./gradlew downloadIdeaForSparkPlugin`
+
+### Spark & Data
+The next step is to run
+
+`./gradlew prepareUsb`
+
+This will download the Spark distribution, and the Spark example data we are going to use in the workshop.
+
+[NOTE]
+.Locations
+====
+Spark, Gradle is downloaded to the link:tools[Tools] directory
+
+Data is put in the link:data[Data] directory
+====
+
+
+## Get Started
+
+### Starting the REPL
+Go to link:tools/spark-1.3.1-bin-hadoop2.6/bin/spark-shell[spark-1.3.1-bin-hadoop2.6/bin/spark-shell] to start the Shell
+
+### Open Projects in your IDE
+#### Eclipse
+##### Generate Eclipse Project
+Run `./gradlew eclipse` to generate the Eclipse project files with the jar's already preconfigured.
+
+In Eclipse go to menu:File[Import Project...] and select _Existing Projects_ and click next.
+Select this project directory where you should see the spark project and click finish.
+
+[TIP]
+.Optional Step to set correct Scala version
+=======
+This Scala project works with Scala 2.10.  ScalaIDE may default to Scala 2.11 though.
+
+If you see an error in Eclipse that Scala version used doesnt match that of your libraries then
+right click on the project and select menu:Properties...
+
+In the properties window that appears select *Scala Compiler* on the Left Hand pane, then check
+_Use Project Settings_.  The _Scala Installation_ dropdown will be enabled allowing you to select
+"Latest 2.10 bundle (dynamic)".
+
+Whilst you are there, set your `target` as `jvm-1.8`.  Hit OK
+=======
+
+#### IntelliJ IDEA
+##### Install the IDEA plugin
+###### from this USB
+If you ran `gradlew downloadIdeaForSparkPlugin` (or got the USB) prior you will have the scala plugin
+ready to go.
+
+. Open IDEA preferences.
+. Press btn:[Install Plugin from disk]
+. Select where the plugin was downloaded: `tools\ide\Idea\scalaPlugin\scala-intellij-bin-1.4.15.zip`
+. Press btn:[Ok].
+. Once the plugin is installed, you will be prompted to restart.
+. Restart IDEA
+
+
+###### via Internet
+If you have an internet connection you can download the plugin manually.
+
+1. Open IDEA preferences.
+2. Press btn:[Install Jetbrains Plugin]
+3. Type Scala in the window that pops up
+4. Right click the Scala listing and select 'Download and Install'
+5. Press Ok on both the windows.
+6. Once the plugin is installed, you will be prompted to restart.
+7. Restart IDEA
+
+
+##### Open the Project
+If you've got a project already open select menu:File[Open...] and select the `build.gradle` file from this directory.
+This will configure Scala for you.
+
+NOTE: You can also use `gradlew idea` to generate Idea project files (Idea v12 & 13)
