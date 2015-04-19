@@ -5,6 +5,19 @@ apply plugin: 'idea'
 apply from: 'gradle/tools.gradle'
 apply from: 'gradle/information-online.gradle'
 
+buildscript {
+    repositories {
+//        maven {
+//            url "https://plugins.gradle.org/m2/"
+//        }
+        flatDir dir: "${projectDir}/gradle/plugins"
+    }
+    dependencies {
+        classpath "de.undercouch:gradle-download-task:1.2"
+    }
+}
+apply plugin: "de.undercouch.download"
+
 sourceCompatibility = 1.8
 version = '1.0'
 description = "Apache Spark + Hadoop meetup group. Intro workshop Apr 20"
