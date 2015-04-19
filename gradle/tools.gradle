@@ -86,10 +86,10 @@ def eclipseURLs = [
 ]
 
 def intelliJURLs = [
+    scalaPlugin : "https://plugins.jetbrains.com/files/1347/19130/scala-intellij-bin-1.4.15.zip",
 	Windows : "http://download.jetbrains.com/idea/ideaIC-14.1.1.exe",
 	MacOSX : "http://download.jetbrains.com/idea/ideaIC-14.1.1.dmg",
 	Linux : "http://download.jetbrains.com/idea/ideaIC-14.1.1.tar.gz",
-    scalaPlugin : "https://plugins.jetbrains.com/files/1347/19130/scala-intellij-bin-1.4.15.zip"
 ]
 
 task downloadAllIDEs << {
@@ -135,11 +135,6 @@ private def urlPathMap(LinkedHashMap<String, String> ideMap, ideName) {
             dest "$projectDir/tools/ide/$ide/$platform/"
             overwrite false
             onlyIfNewer true
-
-            // make sure the Idea downloaders also get the scala plugin
-            if (ide == "Idea" && platform != "scalaPlugin") {
-                dependsOn "downloadIdeaForScalaPlugin"
-            }
         }
     }
 }
