@@ -128,11 +128,11 @@ private def urlPathMap(LinkedHashMap<String, String> ideMap, ideName) {
             description "Download $ide for $platform"
 
             doFirst {
-                mkdir("$projectDir/tools/ide/$platform/")
+                mkdir("$projectDir/tools/ide/$platform/${URI.create(url).toURL().getPath().tokenize('/')[-1]}")
             }
 
             src url
-            dest "$projectDir/tools/ide/$ide/$platform/"
+            dest "$projectDir/tools/ide/$ide/$platform/${URI.create(url).toURL().getPath().tokenize('/')[-1]}"
             overwrite false
             onlyIfNewer true
         }
