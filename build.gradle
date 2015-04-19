@@ -60,7 +60,7 @@ task extractExampleData(type: Copy, dependsOn: downloadExampleData) {
     group "Lab"
     description "ExtractExampleData"
     from tarTree(dataDestDir)
-    into file(dataDestDir).parentFile
+    into projectDir
 }
 
 task sparkTestShell {
