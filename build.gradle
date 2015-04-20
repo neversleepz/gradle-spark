@@ -19,6 +19,7 @@ buildscript {
 apply plugin: "de.undercouch.download"
 
 sourceCompatibility = 1.8
+targetCompatibility = 1.8
 version = '1.0'
 description = "Apache Spark + Hadoop meetup group. Intro workshop Apr 20"
 
@@ -28,9 +29,11 @@ def hadoopVersion = '2.6'
 
 def sparkLibPath = "$projectDir/tools/spark-$sparkVersion-bin-hadoop$hadoopVersion/lib"
 def scalaLibPath = "$projectDir/tools/scala-jars"
+def zincLibPath = "$projectDir/tools/zinc-jars"
+
 repositories {
     flatDir {
-        dirs sparkLibPath, scalaLibPath
+        dirs sparkLibPath, scalaLibPath, zincLibPath
     }
     jcenter()
 }
@@ -44,9 +47,12 @@ configurations {
 dependencies {
     // this will download scala for you
     compile "org.scala-lang:scala-library:$scalaVersion"
+
+    // offline jars for IDEA scala integration support
     idea "org.scala-lang:scala-library:$scalaVersion"
     idea "org.scala-lang:scala-compiler:$scalaVersion"
     idea "org.scala-lang:scala-reflect:$scalaVersion"
+    zinc "com.typesafe.zinc:zinc:0.3.0"
 
     // Add support for the unsupported scalaConsole gradle task
     // compile "org.scala-lang:jline:$scalaVersion"
@@ -65,11 +71,24 @@ dependencies {
     // testCompile group: 'junit', name: 'junit', version: '4.11'
 }
 
+// try the zinc compiler as scalac 2.10.x doesnt understand target:jvm-1.8
+tasks.withType(ScalaCompile) {
+    scalaCompileOptions.useAnt = false
+}
+
+
 task copyScalaJars(type: Copy) {
     group 'preparation'
     description 'Copy Scala Jars for IDEA support'
     from configurations.compile.files + configurations.idea.files
     into scalaLibPath
+}
+
+task copyZincJars(type: Copy) {
+    group 'preparation'
+    description 'Copy Zinc Jars for IDEA + Scala 2.10 support'
+    from configurations.zinc.files
+    into zincLibPath
 }
 
 task prepareUsb {
