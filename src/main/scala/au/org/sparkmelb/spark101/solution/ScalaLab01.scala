@@ -22,7 +22,7 @@ object ScalaLab01 {
     val sqlContext = new SQLContext( sparkContext )  
   
     // Define Filename, store in a static variable fileName
-    val fileName="""C:\SparkMelbourne\spark-1.3.1-bin-hadoop2.6\data\people.json"""
+    val fileName="""data/people.json"""
 
     // Perform the read
     var newRows = sqlContext.jsonFile( fileName )
