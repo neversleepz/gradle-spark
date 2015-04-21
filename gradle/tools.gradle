@@ -31,7 +31,7 @@ task downloadNedsSpark(type: Download) {
 task downloadExampleData(type: Download) {
     group "Lab"
     description "Download the data examples"
-    src "https://copy.com/0JLiJiXzNZOa1TvL/Spark/data.tar.gz?download=1"
+    src "https://copy.com/KKYgChU0qRX6sYeS/data.zip?download=1"
     dest dataDestDir
     overwrite false
 }
@@ -39,7 +39,7 @@ task downloadExampleData(type: Download) {
 task extractExampleData(type: Copy, dependsOn: downloadExampleData) {
     group "Lab"
     description "ExtractExampleData"
-    from tarTree(dataDestDir)
+    from zipTree(dataDestDir)
     into projectDir
 }
 
