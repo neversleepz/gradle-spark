@@ -123,16 +123,17 @@ private def urlPathMap(LinkedHashMap<String, String> ideMap, ideName) {
 
 [Idea:intelliJURLs, Eclipse:eclipseURLs].each { ide, platformList ->
     platformList.each { String platform, String url ->
+        def destFile = "$projectDir/tools/ide/$ide/$platform/${URI.create(url).toURL().getPath().tokenize('/')[-1]}"
         task "download${ide}For$platform"(type: Download) {
             group "IDE Downloads"
             description "Download $ide for $platform"
 
             doFirst {
-                mkdir("$projectDir/tools/ide/$platform/${URI.create(url).toURL().getPath().tokenize('/')[-1]}")
+                mkdir(destFile)
             }
 
             src url
-            dest "$projectDir/tools/ide/$ide/$platform/${URI.create(url).toURL().getPath().tokenize('/')[-1]}"
+            dest destFile
             overwrite false
             onlyIfNewer true
         }
